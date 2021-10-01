@@ -28,14 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Card = () => {
+interface ICard {
+  route: string;
+}
+
+const Card: React.FC<ICard> = ({ route }: ICard) => {
   const classes = useStyles();
   const [last, setLast] = useState<Result>({ sorteio: 0, numeros: [] });
 
-  const cardController = new CardController();
+  const cardController = new CardController(route);
 
   const fetchResults = async () => {
-    const results = await cardController.getLast();
+    const results = await cardController.getNumbers();
     setLast(results);
   };
 

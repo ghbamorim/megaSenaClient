@@ -4,15 +4,16 @@ import "react-toastify/dist/ReactToastify.css";
 import Result from "../../models/results";
 
 export default class CardController {
+  route: string = "/last";
   numbers: number[][];
-  getLast = async () => {
+  getNumbers = async () => {
     const api = axios.create({
       baseURL: "https://megasenaapi.herokuapp.com",
     });
 
     const result: Result = new Result();
     try {
-      const response = await api.get("/last");
+      const response = await api.get(this.route);
 
       switch (response.status) {
         case 200:
@@ -50,7 +51,8 @@ export default class CardController {
     return found;
   };
 
-  constructor() {
+  constructor(route: string) {
+    this.route = route;
     const rows: number[] = [];
     for (let i = 1; i <= 60; i++) {
       rows.push(i);

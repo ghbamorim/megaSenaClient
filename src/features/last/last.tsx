@@ -1,7 +1,7 @@
 import Card from "../card/card";
 
 const Last = () => {
-  return <Card></Card>;
+  return <Card route={"/last"}></Card>;
 };
 
 export default Last;

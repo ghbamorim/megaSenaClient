@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Last from "./features/last/last";
 import ClippedDrawer from "./features/menu/menu";
+import SelectResult from "./features/selectResult/selectResult";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +40,7 @@ function App() {
         <ClippedDrawer classes={classes}></ClippedDrawer>
         <div className={classes.content}>
           <Last></Last>
+          <SelectResult></SelectResult>
         </div>
       </header>
       <ToastContainer

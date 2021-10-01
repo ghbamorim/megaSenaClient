@@ -1,5 +1,5 @@
 import { AppBar, Typography } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
+
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -24,17 +24,12 @@ const ClippedDrawer: React.FC<IMenu> = ({ classes }: IMenu) => {
       <Drawer variant="permanent" className={classes.drawer}>
         <Toolbar />
         <List>
-          {["Resultado mais recente", "Starred", "Send email", "Drafts"].map(
-            (text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            )
-          )}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
+          {[
+            "Resultado mais recente",
+            "Selecionar resultado",
+            "Send email",
+            "Drafts",
+          ].map((text, index) => (
             <ListItem button key={text}>
               <ListItemText primary={text} />
             </ListItem>
