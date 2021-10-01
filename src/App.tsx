@@ -3,19 +3,17 @@ import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import Card from "./features/card";
+import Card from "./features/card/card";
 
 const useStyles = makeStyles((theme) => ({
   App: {
     textAlign: "center",
+    backgroundColor: "#FDFDD7",
   },
 
   AppHeader: {
-    backgroundColor: "#FDFDD7",
-    minHeight: "100vh",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "calc(10px + 2vmin)",
     color: "#DF977E",
   },
 }));

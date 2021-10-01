@@ -2,8 +2,9 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import UniqueId from "../utils/utils";
+import UniqueId from "../../utils/utils";
 import CardController from "./cardController";
+import Result from "../../models/results";
 
 const useStyles = makeStyles((theme) => ({
   App: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Card = () => {
   const classes = useStyles();
-  const [last, setLast] = useState<number[]>([]);
+  const [last, setLast] = useState<Result>({ sorteio: 0, numeros: [] });
 
   const cardController = new CardController();
 
@@ -45,7 +46,10 @@ const Card = () => {
 
   return (
     <React.Fragment>
-      {cardController.arr.map((chunck: any) => {
+      <div style={{ textAlign: "left" }}>
+        <p>{`Consurso número ${last.sorteio}`}</p>
+      </div>
+      {cardController.numbers.map((chunck: any) => {
         return (
           <Grid
             container
@@ -62,7 +66,7 @@ const Card = () => {
                 >
                   <div
                     className={
-                      cardController.isSelected(last, item)
+                      cardController.isSelected(last.numeros, item)
                         ? classes.selectedNumber
                         : ""
                     }

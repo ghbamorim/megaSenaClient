@@ -1,40 +1,39 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Result from "../../models/results";
 
 export default class CardController {
-  rows: number[] = [];
-  arr: number[][];
+  numbers: number[][];
   getLast = async () => {
     const api = axios.create({
       baseURL: "https://megasenaapi.herokuapp.com",
     });
 
-    const result: number[] = [];
+    const result: Result = new Result();
     try {
       const response = await api.get("/last");
 
       switch (response.status) {
-        case 202:
-          toast(response.statusText);
-          break;
-
         case 200:
-          result.push(parseInt(response.data.coluna_1));
-          result.push(parseInt(response.data.coluna_2));
-          result.push(parseInt(response.data.coluna_3));
-          result.push(parseInt(response.data.coluna_4));
-          result.push(parseInt(response.data.coluna_5));
-          result.push(parseInt(response.data.coluna_6));
+          result.sorteio = response.data.concurso;
+          result.data = response.data.data_do_sorteio;
+          result.numeros.push(parseInt(response.data.coluna_1));
+          result.numeros.push(parseInt(response.data.coluna_2));
+          result.numeros.push(parseInt(response.data.coluna_3));
+          result.numeros.push(parseInt(response.data.coluna_4));
+          result.numeros.push(parseInt(response.data.coluna_5));
+          result.numeros.push(parseInt(response.data.coluna_6));
+          break;
+        case 202:
+          toast("Atualizando dados, aguarde");
           break;
       }
-
-      return result;
     } catch (error: any) {
       const msg = (error as Error).message;
       toast(msg);
-      return result;
     }
+    return result;
   };
 
   sliceIntoChunks = (arr: any[], chunkSize: number) => {
@@ -50,10 +49,12 @@ export default class CardController {
     const found = array.indexOf(n) !== -1;
     return found;
   };
+
   constructor() {
+    const rows: number[] = [];
     for (let i = 1; i <= 60; i++) {
-      this.rows.push(i);
+      rows.push(i);
     }
-    this.arr = this.sliceIntoChunks(this.rows, 10);
+    this.numbers = this.sliceIntoChunks(rows, 10);
   }
 }
