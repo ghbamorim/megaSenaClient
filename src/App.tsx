@@ -2,10 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
-import Card from "./features/card/card";
+import Last from "./features/last/last";
 import ClippedDrawer from "./features/menu/menu";
 
+const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   App: {
     textAlign: "center",
@@ -17,6 +17,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     color: "#DF977E",
   },
+  drawer: {
+    width: drawerWidth,
+    zIndex: 10,
+  },
+  appBar: {
+    zIndex: 2000,
+  },
+  content: {
+    paddingTop: 50,
+    paddingLeft: drawerWidth - 40,
+  },
 }));
 
 function App() {
@@ -25,8 +36,10 @@ function App() {
   return (
     <div className={classes.App}>
       <header className={classes.AppHeader}>
-        <ClippedDrawer></ClippedDrawer>
-        <Card></Card>
+        <ClippedDrawer classes={classes}></ClippedDrawer>
+        <div className={classes.content}>
+          <Last></Last>
+        </div>
       </header>
       <ToastContainer
         position="bottom-center"

@@ -1,4 +1,4 @@
-import { AppBar, makeStyles, Typography } from "@material-ui/core";
+import { AppBar, Typography } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -7,20 +7,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
 
-const drawerWidth = 240;
+interface IMenu {
+  classes: any;
+}
 
-const useStyles = makeStyles((theme: any) => ({
-  drawer: {
-    width: drawerWidth,
-    zIndex: 10,
-  },
-  appBar: {
-    zIndex: 2000,
-  },
-}));
-
-export default function ClippedDrawer() {
-  const classes = useStyles();
+const ClippedDrawer: React.FC<IMenu> = ({ classes }: IMenu) => {
   return (
     <React.Fragment>
       <AppBar position="fixed" className={classes.appBar}>
@@ -52,4 +43,6 @@ export default function ClippedDrawer() {
       </Drawer>
     </React.Fragment>
   );
-}
+};
+
+export default ClippedDrawer;
