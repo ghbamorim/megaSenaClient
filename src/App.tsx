@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Card from "./features/card/card";
+import ClippedDrawer from "./features/menu/menu";
 
 const useStyles = makeStyles((theme) => ({
   App: {
@@ -24,6 +25,7 @@ function App() {
   return (
     <div className={classes.App}>
       <header className={classes.AppHeader}>
+        <ClippedDrawer></ClippedDrawer>
         <Card></Card>
       </header>
       <ToastContainer

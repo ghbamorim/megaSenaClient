@@ -47,7 +47,7 @@ const Card = () => {
   return (
     <React.Fragment>
       <div style={{ textAlign: "left" }}>
-        <p>{`Consurso número ${last.sorteio}`}</p>
+        <p>{`Consurso número: ${last.sorteio}`}</p>
       </div>
       {cardController.numbers.map((chunck: any) => {
         return (
