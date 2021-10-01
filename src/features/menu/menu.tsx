@@ -1,11 +1,13 @@
 import { AppBar, Typography } from "@material-ui/core";
-
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
+import Last from "../last/last";
+import SelectResult from "../selectResult/selectResult";
 import * as React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 interface IMenu {
   classes: any;
@@ -24,16 +26,12 @@ const ClippedDrawer: React.FC<IMenu> = ({ classes }: IMenu) => {
       <Drawer variant="permanent" className={classes.drawer}>
         <Toolbar />
         <List>
-          {[
-            "Resultado mais recente",
-            "Selecionar resultado",
-            "Send email",
-            "Drafts",
-          ].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key={"Resultado mais recente"}>
+            <Link to="/last">Resultado mais recente</Link>
+          </ListItem>
+          <ListItem button key={"Selecionar resultado"}>
+            <Link to="/selectResult">Selecionar resultado</Link>
+          </ListItem>
         </List>
       </Drawer>
     </React.Fragment>
