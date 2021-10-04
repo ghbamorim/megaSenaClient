@@ -7,7 +7,7 @@ import Card from "../card/card";
 import CardController from "../card/cardController";
 import Result from "../../models/results";
 import { connect } from "react-redux";
-import { setLast, setSelectedResult } from "../../store";
+import { setLast, setSelectedResult, initialResult } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -33,7 +33,7 @@ const SelectResult = (props: any) => {
   };
 
   const fetchResults = async () => {
-    if (last === 1) {
+    if (last === 1 || selectedResult === initialResult) {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
       dispatch(setLast(results.sorteio));
