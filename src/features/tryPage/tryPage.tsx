@@ -1,9 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { toast } from "react-toastify";
-import Result from "../../models/results";
 import Card from "../card/card";
 import CardController from "../card/cardController";
+import { connect } from "react-redux";
+import { setLast, setResult } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -11,19 +12,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TryPage = () => {
+const TryPage = (props: any) => {
+  const dispatch = props.dispatch;
   const classes = useStyles();
-  const [result, setResult] = React.useState<Result>({
-    sorteio: 0,
-    //data: new Date(),
-    numeros: [],
-  });
+  const last = props.last;
+  const result = props.result;
 
   const fetchResults = async () => {
-    const cardController = new CardController("/last");
-    const results = await cardController.getNumbers();
-    const newResult = { ...result, sorteio: ++results.sorteio };
-    setResult(newResult);
+    if (last === 1) {
+      const cardController = new CardController("/last");
+      const results = await cardController.getNumbers();
+      const newResult = { ...result, sorteio: ++results.sorteio };
+      dispatch(setLast(results.sorteio));
+      dispatch(setResult(newResult));
+    }
   };
 
   React.useEffect(() => {
@@ -47,20 +49,8 @@ const TryPage = () => {
     }
 
     const newResult = { ...result, numeros: newNumbers };
-    setResult(newResult);
+    dispatch(setResult(newResult));
   };
-
-  /*const fetchResults = async () => {
-    const cardController = new CardController("/last");
-    const results = await cardController.getNumbers();
-    setLast(results.sorteio);
-    setResult(results);
-  };
-
-  useEffect(() => {
-    fetchResults();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);*/
 
   return (
     <div className={classes.select}>
@@ -69,4 +59,7 @@ const TryPage = () => {
   );
 };
 
-export default TryPage;
+export default connect((state) => ({
+  last: (state as any).last,
+  result: (state as any).result,
+}))(TryPage);
