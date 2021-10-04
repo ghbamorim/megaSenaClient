@@ -2,12 +2,9 @@ import { AppBar, Typography } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
-import Last from "../last/last";
-import SelectResult from "../selectResult/selectResult";
 import * as React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface IMenu {
   classes: any;

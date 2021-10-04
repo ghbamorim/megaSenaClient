@@ -2,9 +2,9 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import Result from "../../models/results";
 import UniqueId from "../../utils/utils";
 import CardController from "./cardController";
-import Result from "../../models/results";
 
 const useStyles = makeStyles((theme) => ({
   App: {

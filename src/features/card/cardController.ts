@@ -2,8 +2,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Result from "../../models/results";
-import Last from "../last/last";
-import SelectResult from "../selectResult/selectResult";
 
 export default class CardController {
   route: string = "/last";
