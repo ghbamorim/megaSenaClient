@@ -3,7 +3,6 @@ import React from "react";
 import { toast } from "react-toastify";
 import Result from "../../models/results";
 import Card from "../card/card";
-import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   select: {
