@@ -7,18 +7,6 @@ import UniqueId from "../../utils/utils";
 import CardController from "./cardController";
 
 const useStyles = makeStyles((theme) => ({
-  App: {
-    textAlign: "center",
-  },
-
-  AppHeader: {
-    backgroundColor: "#FDFDD7",
-    minHeight: "100vh",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "calc(10px + 2vmin)",
-    color: "#DF977E",
-  },
   border: {
     border: "2px solid",
   },
@@ -51,7 +39,7 @@ const Card: React.FC<ICard> = ({ route }: ICard) => {
   return (
     <React.Fragment>
       <div style={{ textAlign: "left" }}>
-        <p>{`Consurso número: ${last.sorteio}`}</p>
+        <p>{`Consurso número: ${last.sorteio} - ${last.data}`}</p>
       </div>
       {cardController.numbers.map((chunck: any) => {
         return (

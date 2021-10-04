@@ -7,8 +7,13 @@ import Card from "../card/card";
 import CardController from "../card/cardController";
 
 const useStyles = makeStyles((theme) => ({
-  alignLeft: {
+  select: {
     textAlign: "left",
+    paddingTop: 30,
+  },
+  appHead: {
+    backgroundColor: "#FDFDD7",
+    color: "#DF977E",
   },
 }));
 
@@ -25,6 +30,7 @@ const SelectResult = () => {
     const cardController = new CardController("/last");
     const results = await cardController.getNumbers();
     setLast(results.sorteio);
+    setConcurso(results.sorteio);
   };
 
   useEffect(() => {
@@ -39,14 +45,20 @@ const SelectResult = () => {
 
   return (
     <React.Fragment>
-      <div className={classes.alignLeft}>
-        <InputLabel id="demo-simple-select-standard-label">Consurso</InputLabel>
+      <div className={classes.select}>
+        <InputLabel
+          id="demo-simple-select-standard-label"
+          className={classes.appHead}
+        >
+          Selecione o consurso
+        </InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={concurso}
           onChange={handleChange}
-          label="Age"
+          label="Concurso"
+          className={classes.appHead}
         >
           <MenuItem value="" key={0}>
             <em>-</em>
