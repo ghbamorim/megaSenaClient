@@ -3,11 +3,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { initialResult, setLast, setSelectedResult } from "../../store";
 import Card from "../card/card";
 import CardController from "../card/cardController";
-import Result from "../../models/results";
-import { connect } from "react-redux";
-import { setLast, setSelectedResult, initialResult } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
   select: {
