@@ -46,11 +46,13 @@ const Card: React.FC<ICard> = ({ result, onClick }: ICard) => {
 
   return (
     <React.Fragment>
-      {result.sorteio ? (
-        <div style={{ textAlign: "left" }}>
-          <p>{`Consurso número: ${result.sorteio} - ${result.data}`}</p>
-        </div>
-      ) : null}
+      <div style={{ textAlign: "left" }}>
+        <p>
+          {result.sorteio > 0 && `Consurso número: ${result.sorteio}`}
+          {result.data && ` - ${result.data}`}
+        </p>
+      </div>
+
       {numbers.map((chunck: any) => {
         return (
           <Grid

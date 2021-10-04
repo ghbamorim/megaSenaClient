@@ -3,10 +3,11 @@ import React from "react";
 import { toast } from "react-toastify";
 import Result from "../../models/results";
 import Card from "../card/card";
+import CardController from "../card/cardController";
 
 const useStyles = makeStyles((theme) => ({
   select: {
-    paddingTop: 30,
+    paddingTop: 10,
   },
 }));
 
@@ -14,8 +15,21 @@ const TryPage = () => {
   const classes = useStyles();
   const [result, setResult] = React.useState<Result>({
     sorteio: 0,
+    //data: new Date(),
     numeros: [],
   });
+
+  const fetchResults = async () => {
+    const cardController = new CardController("/last");
+    const results = await cardController.getNumbers();
+    const newResult = { ...result, sorteio: ++results.sorteio };
+    setResult(newResult);
+  };
+
+  React.useEffect(() => {
+    fetchResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = async (event: any): Promise<void> => {
     const newNumbers = result.numeros;
