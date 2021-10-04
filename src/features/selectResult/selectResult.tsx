@@ -6,6 +6,8 @@ import React, { useEffect } from "react";
 import Card from "../card/card";
 import CardController from "../card/cardController";
 import Result from "../../models/results";
+import { connect } from "react-redux";
+import { setLast } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -18,13 +20,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SelectResult = () => {
+const SelectResult = (props: any) => {
   const classes = useStyles();
+  const last = props.last;
+  const dispatch = props.dispatch;
   const [result, setResult] = React.useState<Result>({
     sorteio: 0,
     numeros: [],
   });
-  const [last, setLast] = React.useState(1);
 
   const handleChange = async (event: any) => {
     const cardController = new CardController(`/results/${event.target.value}`);
@@ -33,10 +36,12 @@ const SelectResult = () => {
   };
 
   const fetchResults = async () => {
-    const cardController = new CardController("/last");
-    const results = await cardController.getNumbers();
-    setLast(results.sorteio);
-    setResult(results);
+    if (last === 1) {
+      const cardController = new CardController("/last");
+      const results = await cardController.getNumbers();
+      dispatch(setLast(results.sorteio));
+      setResult(results);
+    }
   };
 
   useEffect(() => {
@@ -81,4 +86,7 @@ const SelectResult = () => {
   );
 };
 
-export default SelectResult;
+export default connect((state) => ({
+  last: (state as any).last,
+  result: (state as any).result,
+}))(SelectResult);

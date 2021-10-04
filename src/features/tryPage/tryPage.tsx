@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TryPage = (props: any) => {
-  const dispatch = props.dispatch;
   const classes = useStyles();
+  const dispatch = props.dispatch;
   const last = props.last;
   const result = props.result;
 
