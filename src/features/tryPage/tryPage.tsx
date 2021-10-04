@@ -16,13 +16,13 @@ const TryPage = (props: any) => {
   const classes = useStyles();
   const dispatch = props.dispatch;
   const last = props.last;
-  const result = props.result;
+  const userNumbers = props.userNumbers;
 
   const fetchResults = async () => {
     if (last === 1) {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
-      const newResult = { ...result, sorteio: ++results.sorteio };
+      const newResult = { ...userNumbers, sorteio: ++results.sorteio };
       dispatch(setLast(results.sorteio));
       dispatch(setResult(newResult));
     }
@@ -34,7 +34,7 @@ const TryPage = (props: any) => {
   }, []);
 
   const handleClick = async (event: any): Promise<void> => {
-    const newNumbers = result.numeros;
+    const newNumbers = userNumbers.numeros;
     const newNumber = Number(event.target.textContent);
 
     const index = newNumbers.indexOf(newNumber);
@@ -48,18 +48,18 @@ const TryPage = (props: any) => {
       newNumbers.push(newNumber);
     }
 
-    const newResult = { ...result, numeros: newNumbers };
+    const newResult = { ...userNumbers, numeros: newNumbers };
     dispatch(setResult(newResult));
   };
 
   return (
     <div className={classes.select}>
-      <Card result={result} onClick={handleClick}></Card>
+      <Card result={userNumbers} onClick={handleClick}></Card>
     </div>
   );
 };
 
 export default connect((state) => ({
   last: (state as any).last,
-  result: (state as any).result,
+  userNumbers: (state as any).userNumbers,
 }))(TryPage);
