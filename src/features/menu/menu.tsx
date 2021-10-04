@@ -29,6 +29,9 @@ const ClippedDrawer: React.FC<IMenu> = ({ classes }: IMenu) => {
           <ListItem button key={"Selecionar resultado"}>
             <Link to="/selectResult">Selecionar resultado</Link>
           </ListItem>
+          <ListItem button key={"Praticar"}>
+            <Link to="/try">Praticar</Link>
+          </ListItem>
         </List>
       </Drawer>
     </React.Fragment>

@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Last from "./features/last/last";
 import ClippedDrawer from "./features/menu/menu";
 import SelectResult from "./features/selectResult/selectResult";
+import TryPage from "./features/tryPage/tryPage";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +48,9 @@ function App() {
               </Route>
               <Route path="/selectResult">
                 <SelectResult />
+              </Route>
+              <Route path="/try">
+                <TryPage />
               </Route>
             </Switch>
           </div>
