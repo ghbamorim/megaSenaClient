@@ -46,7 +46,7 @@ const Card: React.FC<ICard> = ({ route }: ICard) => {
   useEffect(() => {
     fetchResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [route]);
 
   return (
     <React.Fragment>
