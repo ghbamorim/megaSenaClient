@@ -1,7 +1,11 @@
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import Card from "../card/card";
 import CardController from "../card/cardController";
+import Result from "../../models/results";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -16,18 +20,23 @@ const useStyles = makeStyles((theme) => ({
 
 const TryPage = () => {
   const classes = useStyles();
-  const [concurso, setConcurso] = React.useState(1);
+  const [result, setResult] = React.useState<Result>({
+    sorteio: 0,
+    numeros: [],
+  });
   const [last, setLast] = React.useState(1);
 
-  const handleChange = (event: any) => {
-    setConcurso(event.target.value);
+  const handleChange = async (event: any) => {
+    const cardController = new CardController(`/results/${event.target.value}`);
+    const results = await cardController.getNumbers();
+    setResult(results);
   };
 
   const fetchResults = async () => {
     const cardController = new CardController("/last");
     const results = await cardController.getNumbers();
     setLast(results.sorteio);
-    setConcurso(results.sorteio);
+    setResult(results);
   };
 
   useEffect(() => {
@@ -42,7 +51,32 @@ const TryPage = () => {
 
   return (
     <React.Fragment>
-      <Card route={`/results/${concurso}`}></Card>
+      <div className={classes.select}>
+        <InputLabel
+          id="demo-simple-select-standard-label"
+          className={classes.appHead}
+        >
+          Selecione o consurso
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={result.sorteio}
+          onChange={handleChange}
+          label="Concurso"
+          className={classes.appHead}
+        >
+          <MenuItem value="" key={0}>
+            <em>-</em>
+          </MenuItem>
+          {allPrizes.map((i) => (
+            <MenuItem value={i} key={i}>
+              {i}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
+      <Card result={result}></Card>
     </React.Fragment>
   );
 };

@@ -1,10 +1,9 @@
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Result from "../../models/results";
 import UniqueId from "../../utils/utils";
-import CardController from "./cardController";
 
 const useStyles = makeStyles((theme) => ({
   border: {
@@ -17,31 +16,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ICard {
-  route: string;
+  result: Result;
 }
 
-const Card: React.FC<ICard> = ({ route }: ICard) => {
+const Card: React.FC<ICard> = ({ result }: ICard) => {
   const classes = useStyles();
-  const [last, setLast] = useState<Result>({ sorteio: 0, numeros: [] });
 
-  const cardController = new CardController(route);
+  const tempNumbers: number[] = [];
 
-  const fetchResults = async () => {
-    const results = await cardController.getNumbers();
-    setLast(results);
+  const sliceIntoCols = (arr: any[], chunkSize: number) => {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      const chunk = arr.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
   };
 
-  useEffect(() => {
-    fetchResults();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route]);
+  const isSelected = (array: number[], n: number) => {
+    const found = array.indexOf(n) !== -1;
+    return found;
+  };
+
+  for (let i = 1; i <= 60; i++) {
+    tempNumbers.push(i);
+  }
+  const numbers: number[][] = sliceIntoCols(tempNumbers, 10);
 
   return (
     <React.Fragment>
       <div style={{ textAlign: "left" }}>
-        <p>{`Consurso número: ${last.sorteio} - ${last.data}`}</p>
+        <p>{`Consurso número: ${result.sorteio} - ${result.data}`}</p>
       </div>
-      {cardController.numbers.map((chunck: any) => {
+      {numbers.map((chunck: any) => {
         return (
           <Grid
             container
@@ -58,7 +65,7 @@ const Card: React.FC<ICard> = ({ route }: ICard) => {
                 >
                   <div
                     className={
-                      cardController.isSelected(last.numeros, item)
+                      isSelected(result.numeros, item)
                         ? classes.selectedNumber
                         : ""
                     }

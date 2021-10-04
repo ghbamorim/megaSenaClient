@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import Card from "../card/card";
 import CardController from "../card/cardController";
+import Result from "../../models/results";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -19,18 +20,23 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectResult = () => {
   const classes = useStyles();
-  const [concurso, setConcurso] = React.useState(1);
+  const [result, setResult] = React.useState<Result>({
+    sorteio: 0,
+    numeros: [],
+  });
   const [last, setLast] = React.useState(1);
 
-  const handleChange = (event: any) => {
-    setConcurso(event.target.value);
+  const handleChange = async (event: any) => {
+    const cardController = new CardController(`/results/${event.target.value}`);
+    const results = await cardController.getNumbers();
+    setResult(results);
   };
 
   const fetchResults = async () => {
     const cardController = new CardController("/last");
     const results = await cardController.getNumbers();
     setLast(results.sorteio);
-    setConcurso(results.sorteio);
+    setResult(results);
   };
 
   useEffect(() => {
@@ -55,7 +61,7 @@ const SelectResult = () => {
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={concurso}
+          value={result.sorteio}
           onChange={handleChange}
           label="Concurso"
           className={classes.appHead}
@@ -70,7 +76,7 @@ const SelectResult = () => {
           ))}
         </Select>
       </div>
-      <Card route={`/results/${concurso}`}></Card>
+      <Card result={result}></Card>
     </React.Fragment>
   );
 };

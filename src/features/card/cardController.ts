@@ -5,8 +5,7 @@ import Result from "../../models/results";
 
 export default class CardController {
   route: string = "/last";
-  numbers: number[][];
-  getNumbers = async () => {
+  getNumbers = async (): Promise<Result> => {
     const api = axios.create({
       baseURL: "https://megasenaapi.herokuapp.com",
     });
@@ -37,26 +36,7 @@ export default class CardController {
     return result;
   };
 
-  sliceIntoChunks = (arr: any[], chunkSize: number) => {
-    const res = [];
-    for (let i = 0; i < arr.length; i += chunkSize) {
-      const chunk = arr.slice(i, i + chunkSize);
-      res.push(chunk);
-    }
-    return res;
-  };
-
-  isSelected = (array: number[], n: number) => {
-    const found = array.indexOf(n) !== -1;
-    return found;
-  };
-
   constructor(route: string) {
     this.route = route;
-    const rows: number[] = [];
-    for (let i = 1; i <= 60; i++) {
-      rows.push(i);
-    }
-    this.numbers = this.sliceIntoChunks(rows, 10);
   }
 }
