@@ -5,27 +5,32 @@ import Card from "../card/card";
 import CardController from "../card/cardController";
 import { connect } from "react-redux";
 import { setLast, setResult } from "../../store";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   select: {
     paddingTop: 10,
+  },
+  button: {
+    //paddingTop: 2,
+    width: 100,
   },
 }));
 
 const TryPage = (props: any) => {
   const classes = useStyles();
   const dispatch = props.dispatch;
-  const last = props.last;
+  const last: number = props.last;
   const userNumbers = props.userNumbers;
 
   const fetchResults = async () => {
     if (last === 1) {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
-      const newResult = { ...userNumbers, sorteio: ++results.sorteio };
       dispatch(setLast(results.sorteio));
-      dispatch(setResult(newResult));
     }
+    const newResult = { ...userNumbers, sorteio: Number(last) + 1 };
+    dispatch(setResult(newResult));
   };
 
   React.useEffect(() => {
@@ -52,9 +57,20 @@ const TryPage = (props: any) => {
     dispatch(setResult(newResult));
   };
 
+  const handleClear = async (event: any): Promise<void> => {
+    dispatch(setResult({ ...userNumbers, numeros: [] }));
+  };
+
   return (
     <div className={classes.select}>
       <Card result={userNumbers} onClick={handleClick}></Card>
+      <Grid container spacing={1}>
+        <Grid item xs={1}>
+          <button onClick={handleClear} className={classes.button}>
+            Limpar
+          </button>
+        </Grid>
+      </Grid>
     </div>
   );
 };

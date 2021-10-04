@@ -63,13 +63,13 @@ const Card: React.FC<ICard> = ({ result, onClick }: ICard) => {
             {chunck.map((item: number) => {
               return (
                 <Grid
+                  onClick={onClick}
                   item
                   xs={1}
                   className={classes.border}
                   key={UniqueId.getInstance().getUniqueId()}
                 >
                   <div
-                    onClick={onClick}
                     className={
                       isSelected(result.numeros, item)
                         ? classes.selectedNumber

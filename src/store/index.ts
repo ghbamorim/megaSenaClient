@@ -1,12 +1,15 @@
 import { createStore } from "redux";
 import Result from "../models/results";
 
+const initialResult = {
+  sorteio: 1,
+  numeros: [],
+};
+
 const INITIAL_STATE = {
   last: 1,
-  userNumbers: {
-    sorteio: 1,
-    numeros: [],
-  },
+  userNumbers: initialResult,
+  selectedResult: initialResult,
 };
 
 const reducer = (state: any = INITIAL_STATE, action: any) => {
@@ -15,6 +18,9 @@ const reducer = (state: any = INITIAL_STATE, action: any) => {
   }
   if (action.type === "SET_USERNUMBERS") {
     return { ...state, userNumbers: action.newResult };
+  }
+  if (action.type === "SET_SELECTED") {
+    return { ...state, selectedResult: action.newSelectedResult };
   }
   return state;
 };
@@ -25,6 +31,13 @@ export const setLast = (newLast: number) => {
   return {
     type: "SET_LAST",
     newLast,
+  };
+};
+
+export const setSelectedResult = (newSelectedResult: Result) => {
+  return {
+    type: "SET_SELECTED",
+    newSelectedResult,
   };
 };
 

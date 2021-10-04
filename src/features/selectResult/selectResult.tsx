@@ -7,7 +7,7 @@ import Card from "../card/card";
 import CardController from "../card/cardController";
 import Result from "../../models/results";
 import { connect } from "react-redux";
-import { setLast } from "../../store";
+import { setLast, setSelectedResult } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -23,16 +23,13 @@ const useStyles = makeStyles((theme) => ({
 const SelectResult = (props: any) => {
   const classes = useStyles();
   const last = props.last;
+  const selectedResult = props.selectedResult;
   const dispatch = props.dispatch;
-  const [result, setResult] = React.useState<Result>({
-    sorteio: 0,
-    numeros: [],
-  });
 
   const handleChange = async (event: any) => {
     const cardController = new CardController(`/results/${event.target.value}`);
     const results = await cardController.getNumbers();
-    setResult(results);
+    dispatch(setSelectedResult(results));
   };
 
   const fetchResults = async () => {
@@ -40,7 +37,7 @@ const SelectResult = (props: any) => {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
       dispatch(setLast(results.sorteio));
-      setResult(results);
+      dispatch(setSelectedResult(results));
     }
   };
 
@@ -66,7 +63,7 @@ const SelectResult = (props: any) => {
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={result.sorteio}
+          value={selectedResult.sorteio}
           onChange={handleChange}
           label="Concurso"
           className={classes.appHead}
@@ -81,12 +78,12 @@ const SelectResult = (props: any) => {
           ))}
         </Select>
       </div>
-      <Card result={result}></Card>
+      <Card result={selectedResult}></Card>
     </React.Fragment>
   );
 };
 
 export default connect((state) => ({
   last: (state as any).last,
-  result: (state as any).result,
+  selectedResult: (state as any).selectedResult,
 }))(SelectResult);
