@@ -16,10 +16,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ICard {
+  onClick?: (event: any) => Promise<void>;
   result: Result;
 }
 
-const Card: React.FC<ICard> = ({ result }: ICard) => {
+const Card: React.FC<ICard> = ({ result, onClick }: ICard) => {
   const classes = useStyles();
 
   const tempNumbers: number[] = [];
@@ -45,9 +46,11 @@ const Card: React.FC<ICard> = ({ result }: ICard) => {
 
   return (
     <React.Fragment>
-      <div style={{ textAlign: "left" }}>
-        <p>{`Consurso número: ${result.sorteio} - ${result.data}`}</p>
-      </div>
+      {result.sorteio ? (
+        <div style={{ textAlign: "left" }}>
+          <p>{`Consurso número: ${result.sorteio} - ${result.data}`}</p>
+        </div>
+      ) : null}
       {numbers.map((chunck: any) => {
         return (
           <Grid
@@ -64,13 +67,14 @@ const Card: React.FC<ICard> = ({ result }: ICard) => {
                   key={UniqueId.getInstance().getUniqueId()}
                 >
                   <div
+                    onClick={onClick}
                     className={
                       isSelected(result.numeros, item)
                         ? classes.selectedNumber
                         : ""
                     }
                   >
-                    <p> [{item}] </p>
+                    <p>{item}</p>
                   </div>
                 </Grid>
               );

@@ -1,20 +1,13 @@
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect } from "react";
-import Card from "../card/card";
-import CardController from "../card/cardController";
+import React from "react";
+import { toast } from "react-toastify";
 import Result from "../../models/results";
+import Card from "../card/card";
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   select: {
-    textAlign: "left",
     paddingTop: 30,
-  },
-  appHead: {
-    backgroundColor: "#FDFDD7",
-    color: "#DF977E",
   },
 }));
 
@@ -24,15 +17,27 @@ const TryPage = () => {
     sorteio: 0,
     numeros: [],
   });
-  const [last, setLast] = React.useState(1);
 
-  const handleChange = async (event: any) => {
-    const cardController = new CardController(`/results/${event.target.value}`);
-    const results = await cardController.getNumbers();
-    setResult(results);
+  const handleClick = async (event: any): Promise<void> => {
+    const newNumbers = result.numeros;
+    const newNumber = Number(event.target.textContent);
+
+    const index = newNumbers.indexOf(newNumber);
+
+    if (index !== -1) {
+      newNumbers.splice(index, 1);
+    } else if (newNumbers.length === 6) {
+      toast("Selecione apenas 6 números");
+      return;
+    } else {
+      newNumbers.push(newNumber);
+    }
+
+    const newResult = { ...result, numeros: newNumbers };
+    setResult(newResult);
   };
 
-  const fetchResults = async () => {
+  /*const fetchResults = async () => {
     const cardController = new CardController("/last");
     const results = await cardController.getNumbers();
     setLast(results.sorteio);
@@ -42,42 +47,12 @@ const TryPage = () => {
   useEffect(() => {
     fetchResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const allPrizes = [];
-  for (let i = last; i >= 1; i--) {
-    allPrizes.push(i);
-  }
+  }, []);*/
 
   return (
-    <React.Fragment>
-      <div className={classes.select}>
-        <InputLabel
-          id="demo-simple-select-standard-label"
-          className={classes.appHead}
-        >
-          Selecione o consurso
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={result.sorteio}
-          onChange={handleChange}
-          label="Concurso"
-          className={classes.appHead}
-        >
-          <MenuItem value="" key={0}>
-            <em>-</em>
-          </MenuItem>
-          {allPrizes.map((i) => (
-            <MenuItem value={i} key={i}>
-              {i}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-      <Card result={result}></Card>
-    </React.Fragment>
+    <div className={classes.select}>
+      <Card result={result} onClick={handleClick}></Card>
+    </div>
   );
 };
 
