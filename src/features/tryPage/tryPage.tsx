@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
   },
   textArea: {
-    width: 1000,
+    width: 400,
     height: 400,
   },
 }));
