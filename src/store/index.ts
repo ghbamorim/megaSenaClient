@@ -8,6 +8,7 @@ export const initialResult = {
 
 const INITIAL_STATE = {
   last: 1,
+  log: "",
   userNumbers: initialResult,
   selectedResult: initialResult,
 };
@@ -21,6 +22,9 @@ const reducer = (state: any = INITIAL_STATE, action: any) => {
   }
   if (action.type === "SET_SELECTED") {
     return { ...state, selectedResult: action.newSelectedResult as Result };
+  }
+  if (action.type === "SET_LOG") {
+    return { ...state, log: action.newLog };
   }
   return state;
 };
@@ -48,4 +52,10 @@ export const setResult = (newResult: Result) => {
   };
 };
 
+export const setLog = (newLog: string) => {
+  return {
+    type: "SET_LOG",
+    newLog,
+  };
+};
 export default store;
