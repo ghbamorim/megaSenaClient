@@ -27,16 +27,18 @@ const useStyles = makeStyles((theme) => ({
 const TryPage = (props: any) => {
   const classes = useStyles();
   const dispatch = props.dispatch;
-  const last: number = props.last;
   const userNumbers = props.userNumbers;
   const log = props.log;
 
   const fetchResults = async () => {
-    if (last === 1) {
+    if (userNumbers.sorteio === 1) {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
       dispatch(setLast(results.sorteio));
-      const newResult = { ...userNumbers, sorteio: Number(last) + 1 };
+      const newResult = {
+        ...userNumbers,
+        sorteio: Number(results.sorteio) + 1,
+      };
       dispatch(setResult(newResult));
     }
   };
