@@ -5,22 +5,54 @@ import ListItem from "@material-ui/core/ListItem";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { IconButton } from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import MenuIcon from "@material-ui/icons/Menu";
+//import MenuIcon from "@material-ui/icons/Menu";
+//import MenuIcon from "@mui/icons-material/Menu";
 
 interface IMenu {
   classes: any;
 }
 
 const ClippedDrawer: React.FC<IMenu> = ({ classes }: IMenu) => {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setMenuOpen(open);
+    };
+
   return (
     <React.Fragment>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer(true)}
+            edge="start"
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography variant="h6" noWrap component="div">
             Mega Sena
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" className={classes.drawer}>
+      <Drawer
+        anchor={"left"}
+        className={classes.drawerOpen}
+        open={menuOpen}
+        onClose={toggleDrawer(false)}
+      >
         <Toolbar />
         <List>
           <ListItem button key={"Resultado mais recente"}>

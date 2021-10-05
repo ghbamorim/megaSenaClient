@@ -22,8 +22,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     color: "#DF977E",
   },
-  drawer: {
+  drawerOpen: {
     width: drawerWidth,
+    zIndex: 10,
+  },
+  drawerClosed: {
+    width: 5,
     zIndex: 10,
   },
   appBar: {
@@ -31,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     paddingTop: 50,
-    paddingLeft: drawerWidth - 40,
+    //paddingLeft: drawerWidth - 40,
   },
 }));
 
