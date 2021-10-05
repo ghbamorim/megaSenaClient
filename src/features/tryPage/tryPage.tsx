@@ -36,9 +36,9 @@ const TryPage = (props: any) => {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
       dispatch(setLast(results.sorteio));
+      const newResult = { ...userNumbers, sorteio: Number(last) + 1 };
+      dispatch(setResult(newResult));
     }
-    const newResult = { ...userNumbers, sorteio: Number(last) + 1 };
-    dispatch(setResult(newResult));
   };
 
   const fetchStats = async () => {
@@ -49,7 +49,9 @@ const TryPage = (props: any) => {
 
       newLog = `Total de concursos: ${results.length}`;
       results.map((item) => {
-        newLog = newLog + `\n concurso: ${item.sorteio}`;
+        newLog =
+          newLog +
+          `\n concurso: ${item.sorteio}  [${item.numeros[0]}] [${item.numeros[1]}] [${item.numeros[2]}] [${item.numeros[3]}] [${item.numeros[4]}] [${item.numeros[5]}]`;
         return null;
       });
     }

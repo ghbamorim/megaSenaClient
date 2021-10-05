@@ -6,10 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import MenuIcon from "@material-ui/icons/Menu";
-//import MenuIcon from "@material-ui/icons/Menu";
-//import MenuIcon from "@mui/icons-material/Menu";
 
 interface IMenu {
   classes: any;
