@@ -17,10 +17,16 @@ const useStyles = makeStyles((theme) => ({
   textDiv: {
     paddingTop: 10,
     textAlign: "left",
+    borderStyle: "solid",
+    position: "relative",
+    height: 400,
   },
   textArea: {
-    width: 400,
-    height: 400,
+    top: "1%",
+    left: "1%",
+    bottom: "1%",
+    position: "absolute",
+    width: "96%",
   },
 }));
 
