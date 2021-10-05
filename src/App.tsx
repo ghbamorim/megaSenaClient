@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     paddingTop: 50,
-    paddingLeft: drawerWidth - 40,
+    paddingLeft: 40,
   },
 }));
 
