@@ -1,4 +1,11 @@
-import Grid from "@material-ui/core/Grid";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,11 +13,21 @@ import Result from "../../models/results";
 import UniqueId from "../../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
-  border: {
+  cell: {
     border: "2px solid",
+    padding: "0px",
+    textAlign: "center",
+    backgroundColor: "#FDFDD7",
+    color: "#DF977E",
+    fontWeight: 1000,
+    lineHeight: 0,
   },
   selectedNumber: {
     border: "2px solid black",
+    borderRadius: "55px",
+  },
+  unSelectedNumber: {
+    border: "2px solid #FDFDD7",
     borderRadius: "55px",
   },
 }));
@@ -53,7 +70,41 @@ const Card: React.FC<ICard> = ({ result, onClick }: ICard) => {
         </p>
       </div>
 
-      {numbers.map((chunck: any) => {
+      <TableContainer component={Paper}>
+        <Table>
+          <TableBody>
+            {numbers.map((chunck: any) => {
+              return (
+                <TableRow key={UniqueId.getInstance().getUniqueId()}>
+                  {chunck.map((item: number) => {
+                    return (
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        onClick={onClick}
+                        key={item}
+                        className={classes.cell}
+                      >
+                        <div
+                          className={
+                            isSelected(result.numeros, item)
+                              ? classes.selectedNumber
+                              : classes.unSelectedNumber
+                          }
+                        >
+                          <p>{item}</p>
+                        </div>
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/*numbers.map((chunck: any) => {
         return (
           <Grid
             container
@@ -83,7 +134,7 @@ const Card: React.FC<ICard> = ({ result, onClick }: ICard) => {
             })}
           </Grid>
         );
-      })}
+      })*/}
     </React.Fragment>
   );
 };
