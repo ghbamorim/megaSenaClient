@@ -7,16 +7,12 @@ export const initialResult = {
 };
 
 const INITIAL_STATE = {
-  last: 1,
   log: "",
   userNumbers: initialResult,
   selectedResult: initialResult,
 };
 
 const reducer = (state: any = INITIAL_STATE, action: any) => {
-  if (action.type === "SET_LAST") {
-    return { ...state, last: Number(action.newLast) };
-  }
   if (action.type === "SET_USERNUMBERS") {
     return { ...state, userNumbers: action.newResult as Result };
   }
@@ -31,12 +27,6 @@ const reducer = (state: any = INITIAL_STATE, action: any) => {
 
 const store = createStore(reducer);
 
-export const setLast = (newLast: number) => {
-  return {
-    type: "SET_LAST",
-    newLast,
-  };
-};
 
 export const setSelectedResult = (newSelectedResult: Result) => {
   return {

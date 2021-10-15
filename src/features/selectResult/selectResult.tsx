@@ -4,9 +4,10 @@ import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { initialResult, setLast, setSelectedResult } from "../../store";
+import { initialResult, setSelectedResult } from "../../store";
 import Card from "../card/card";
 import CardController from "../card/cardController";
+import { StoreContext } from "../../store/mobx";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -21,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectResult = (props: any) => {
   const classes = useStyles();
-  const last = props.last;
+  const store = React.useContext(StoreContext);
+  const last = store.last;
   const selectedResult = props.selectedResult;
   const dispatch = props.dispatch;
 
@@ -35,7 +37,7 @@ const SelectResult = (props: any) => {
     if (last === 1 || selectedResult === initialResult) {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
-      dispatch(setLast(results.sorteio));
+      store.last = results.sorteio;
       dispatch(setSelectedResult(results));
     }
   };

@@ -9,6 +9,7 @@ import SelectResult from "./features/selectResult/selectResult";
 import TryPage from "./features/tryPage/tryPage";
 import { Provider } from "react-redux";
 import store from "./store";
+import { StoreProvider } from "./store/mobx";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -44,37 +45,39 @@ function App() {
 
   return (
     <div className={classes.App}>
-      <Provider store={store}>
-        <header className={classes.AppHeader}>
-          <Router>
-            <ClippedDrawer classes={classes}></ClippedDrawer>
-            <div className={classes.content}>
-              <Switch>
-                <Route path="/last">
-                  <Last />
-                </Route>
-                <Route path="/selectResult">
-                  <SelectResult />
-                </Route>
-                <Route path="/try">
-                  <TryPage />
-                </Route>
-              </Switch>
-            </div>
-          </Router>
-        </header>
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-      </Provider>
+      <StoreProvider>
+        <Provider store={store}>
+          <header className={classes.AppHeader}>
+            <Router>
+              <ClippedDrawer classes={classes}></ClippedDrawer>
+              <div className={classes.content}>
+                <Switch>
+                  <Route path="/last">
+                    <Last />
+                  </Route>
+                  <Route path="/selectResult">
+                    <SelectResult />
+                  </Route>
+                  <Route path="/try">
+                    <TryPage />
+                  </Route>
+                </Switch>
+              </div>
+            </Router>
+          </header>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </Provider>
+      </StoreProvider>
     </div>
   );
 }

@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 import Card from "../card/card";
 import CardController from "../card/cardController";
 import { connect } from "react-redux";
-import { setLast, setResult, setLog } from "../../store";
+import { setResult, setLog } from "../../store";
 import { Grid } from "@material-ui/core";
+import { StoreContext } from "../../store/mobx";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TryPage = (props: any) => {
+  const store = React.useContext(StoreContext);
   const classes = useStyles();
   const dispatch = props.dispatch;
   const userNumbers = props.userNumbers;
@@ -40,7 +42,7 @@ const TryPage = (props: any) => {
     if (userNumbers.sorteio === 1) {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
-      dispatch(setLast(results.sorteio));
+      store.last = results.sorteio;
       const newResult = {
         ...userNumbers,
         sorteio: Number(results.sorteio) + 1,
