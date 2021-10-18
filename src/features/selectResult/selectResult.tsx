@@ -7,6 +7,7 @@ import Card from "../card/card";
 import CardController from "../card/cardController";
 import { StoreContext } from "../../store/mobx";
 import { initialResult } from "../../store/mobx";
+import { useObserver } from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -19,11 +20,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const CardObserver = () => {
+  const store = React.useContext(StoreContext);
+  return useObserver(() => (
+    <Card result={store.selectedResult}></Card>
+  ));
+};
+
+
 const SelectResult = (props: any) => {
   const classes = useStyles();
   const store = React.useContext(StoreContext);
   const last = store.last;
-  const selectedResult = store.selectedResult;
+  
 
   const handleChange = async (event: any) => {
     const cardController = new CardController(`/results/${event.target.value}`);
@@ -32,7 +41,7 @@ const SelectResult = (props: any) => {
   };
 
   const fetchResults = async () => {
-    if (last === 1 || selectedResult === initialResult) {
+    if (last === 1 || store.selectedResult === initialResult) {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
       store.last = results.sorteio;
@@ -62,7 +71,7 @@ const SelectResult = (props: any) => {
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={selectedResult.sorteio}
+          value={store.selectedResult.sorteio}
           onChange={handleChange}
           label="Concurso"
           className={classes.appHead}
@@ -77,7 +86,7 @@ const SelectResult = (props: any) => {
           ))}
         </Select>
       </div>
-      <Card result={selectedResult}></Card>
+      <CardObserver/>
     </React.Fragment>
   );
 };
