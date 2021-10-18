@@ -20,18 +20,4 @@ const reducer = (state: any = INITIAL_STATE, action: any) => {
 
 const store = createStore(reducer);
 
-export const setSelectedResult = (newSelectedResult: Result) => {
-  return {
-    type: "SET_SELECTED",
-    newSelectedResult,
-  };
-};
-
-export const setResult = (newResult: Result) => {
-  return {
-    type: "SET_USERNUMBERS",
-    newResult,
-  };
-};
-
 export default store;

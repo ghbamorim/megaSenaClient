@@ -3,11 +3,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { initialResult, setSelectedResult } from "../../store";
 import Card from "../card/card";
 import CardController from "../card/cardController";
 import { StoreContext } from "../../store/mobx";
+import { initialResult } from "../../store/mobx";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -24,13 +23,12 @@ const SelectResult = (props: any) => {
   const classes = useStyles();
   const store = React.useContext(StoreContext);
   const last = store.last;
-  const selectedResult = props.selectedResult;
-  const dispatch = props.dispatch;
+  const selectedResult = store.selectedResult;
 
   const handleChange = async (event: any) => {
     const cardController = new CardController(`/results/${event.target.value}`);
     const results = await cardController.getNumbers();
-    dispatch(setSelectedResult(results));
+    store.selectedResult = results;
   };
 
   const fetchResults = async () => {
@@ -38,7 +36,7 @@ const SelectResult = (props: any) => {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
       store.last = results.sorteio;
-      dispatch(setSelectedResult(results));
+      store.selectedResult = results;
     }
   };
 
@@ -84,7 +82,4 @@ const SelectResult = (props: any) => {
   );
 };
 
-export default connect((state) => ({
-  last: (state as any).last,
-  selectedResult: (state as any).selectedResult,
-}))(SelectResult);
+export default SelectResult;
