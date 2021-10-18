@@ -7,8 +7,6 @@ import Last from "./features/last/last";
 import ClippedDrawer from "./features/menu/menu";
 import SelectResult from "./features/selectResult/selectResult";
 import TryPage from "./features/tryPage/tryPage";
-import { Provider } from "react-redux";
-import store from "./store";
 import { StoreProvider } from "./store/mobx";
 
 const drawerWidth = 240;
@@ -46,37 +44,35 @@ function App() {
   return (
     <div className={classes.App}>
       <StoreProvider>
-        <Provider store={store}>
-          <header className={classes.AppHeader}>
-            <Router>
-              <ClippedDrawer classes={classes}></ClippedDrawer>
-              <div className={classes.content}>
-                <Switch>
-                  <Route path="/last">
-                    <Last />
-                  </Route>
-                  <Route path="/selectResult">
-                    <SelectResult />
-                  </Route>
-                  <Route path="/try">
-                    <TryPage />
-                  </Route>
-                </Switch>
-              </div>
-            </Router>
-          </header>
-          <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-        </Provider>
+        <header className={classes.AppHeader}>
+          <Router>
+            <ClippedDrawer classes={classes}></ClippedDrawer>
+            <div className={classes.content}>
+              <Switch>
+                <Route path="/last">
+                  <Last />
+                </Route>
+                <Route path="/selectResult">
+                  <SelectResult />
+                </Route>
+                <Route path="/try">
+                  <TryPage />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </header>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </StoreProvider>
     </div>
   );
