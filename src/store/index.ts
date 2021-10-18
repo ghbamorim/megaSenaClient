@@ -7,7 +7,6 @@ export const initialResult = {
 };
 
 const INITIAL_STATE = {
-  log: "",
   userNumbers: initialResult,
   selectedResult: initialResult,
 };
@@ -18,9 +17,6 @@ const reducer = (state: any = INITIAL_STATE, action: any) => {
   }
   if (action.type === "SET_SELECTED") {
     return { ...state, selectedResult: action.newSelectedResult as Result };
-  }
-  if (action.type === "SET_LOG") {
-    return { ...state, log: action.newLog };
   }
   return state;
 };

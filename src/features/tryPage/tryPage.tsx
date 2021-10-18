@@ -125,6 +125,5 @@ const TryPage = (props: any) => {
 };
 
 export default connect((state) => ({
-  last: (state as any).last,
   userNumbers: (state as any).userNumbers,
 }))(TryPage);
