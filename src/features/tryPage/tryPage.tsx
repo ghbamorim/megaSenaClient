@@ -37,6 +37,18 @@ const CardObserver = (handleClick: any) => {
   ));
 };
 
+const LogObserver = (classes: any) => {
+  const store = React.useContext(StoreContext);
+  return useObserver(() => (
+    <textarea
+          className={classes.textArea}
+          value={store.log}
+          readOnly={true}
+        />
+  ));
+};
+
+
 const TryPage = () => {
   const store = React.useContext(StoreContext);
   const classes = useStyles();
@@ -119,11 +131,7 @@ const TryPage = () => {
         </Grid>
       </div>
       <div className={classes.textDiv}>
-        <textarea
-          className={classes.textArea}
-          value={log}
-          readOnly={true}
-        ></textarea>
+      {LogObserver(classes)}
       </div>
     </React.Fragment>
   );
