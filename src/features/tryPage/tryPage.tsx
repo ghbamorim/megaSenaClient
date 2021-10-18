@@ -3,10 +3,9 @@ import React from "react";
 import { toast } from "react-toastify";
 import Card from "../card/card";
 import CardController from "../card/cardController";
-import { connect } from "react-redux";
-import { setResult } from "../../store";
 import { Grid } from "@material-ui/core";
 import { StoreContext } from "../../store/mobx";
+import { useObserver } from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -31,11 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TryPage = (props: any) => {
+const CardObserver = (handleClick: any) => {
+  const store = React.useContext(StoreContext);
+  return useObserver(() => (
+    <Card result={store.userNumbers} onClick={handleClick}></Card>
+  ));
+};
+
+const TryPage = () => {
   const store = React.useContext(StoreContext);
   const classes = useStyles();
-  const dispatch = props.dispatch;
-  const userNumbers = props.userNumbers;
+  const userNumbers = store.userNumbers;
   const log = store.log;
 
   const fetchResults = async () => {
@@ -47,7 +52,7 @@ const TryPage = (props: any) => {
         ...userNumbers,
         sorteio: Number(results.sorteio) + 1,
       };
-      dispatch(setResult(newResult));
+      store.userNumbers = newResult;
     }
   };
 
@@ -76,7 +81,6 @@ const TryPage = (props: any) => {
   const handleClick = async (event: any): Promise<void> => {
     const newNumbers = userNumbers.numeros;
     const newNumber = Number(event.target.textContent);
-
     const index = newNumbers.indexOf(newNumber);
 
     if (index !== -1) {
@@ -89,7 +93,8 @@ const TryPage = (props: any) => {
     }
 
     const newResult = { ...userNumbers, numeros: newNumbers };
-    dispatch(setResult(newResult));
+    store.userNumbers = newResult;
+
     if (newNumbers.length === 0) {
       store.log = "";
     }
@@ -98,13 +103,13 @@ const TryPage = (props: any) => {
 
   const handleClear = async (event: any): Promise<void> => {
     store.log = "";
-    dispatch(setResult({ ...userNumbers, numeros: [] }));
+    store.userNumbers = { ...userNumbers, numeros: [] };
   };
 
   return (
     <React.Fragment>
       <div className={classes.select}>
-        <Card result={userNumbers} onClick={handleClick}></Card>
+        {CardObserver(handleClick)}
         <Grid container spacing={1}>
           <Grid item xs={1}>
             <button onClick={handleClear} className={classes.button}>
@@ -124,6 +129,4 @@ const TryPage = (props: any) => {
   );
 };
 
-export default connect((state) => ({
-  userNumbers: (state as any).userNumbers,
-}))(TryPage);
+export default TryPage;

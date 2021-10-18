@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocalStore, useObserver } from "mobx-react-lite";
+import { useLocalStore } from "mobx-react-lite";
 
 export const StoreContext = React.createContext();
 

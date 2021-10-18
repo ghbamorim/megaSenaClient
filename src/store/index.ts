@@ -12,9 +12,6 @@ const INITIAL_STATE = {
 };
 
 const reducer = (state: any = INITIAL_STATE, action: any) => {
-  if (action.type === "SET_USERNUMBERS") {
-    return { ...state, userNumbers: action.newResult as Result };
-  }
   if (action.type === "SET_SELECTED") {
     return { ...state, selectedResult: action.newSelectedResult as Result };
   }
