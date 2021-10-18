@@ -27,7 +27,6 @@ const reducer = (state: any = INITIAL_STATE, action: any) => {
 
 const store = createStore(reducer);
 
-
 export const setSelectedResult = (newSelectedResult: Result) => {
   return {
     type: "SET_SELECTED",
@@ -42,10 +41,4 @@ export const setResult = (newResult: Result) => {
   };
 };
 
-export const setLog = (newLog: string) => {
-  return {
-    type: "SET_LOG",
-    newLog,
-  };
-};
 export default store;

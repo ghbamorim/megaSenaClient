@@ -8,14 +8,13 @@ export const initialResult = {
   numeros: [],
 };
 
-
 export const StoreProvider = ({ children }) => {
   const store = useLocalStore(() => ({
     last: 1,
-    log: "",    
+    log: "",
     userNumbers: initialResult,
-    selectedResult: initialResult,   
-  }));  
+    selectedResult: initialResult,
+  }));
 
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Card from "../card/card";
 import CardController from "../card/cardController";
 import { connect } from "react-redux";
-import { setResult, setLog } from "../../store";
+import { setResult } from "../../store";
 import { Grid } from "@material-ui/core";
 import { StoreContext } from "../../store/mobx";
 
@@ -36,7 +36,7 @@ const TryPage = (props: any) => {
   const classes = useStyles();
   const dispatch = props.dispatch;
   const userNumbers = props.userNumbers;
-  const log = props.log;
+  const log = store.log;
 
   const fetchResults = async () => {
     if (userNumbers.sorteio === 1) {
@@ -65,8 +65,7 @@ const TryPage = (props: any) => {
         return null;
       });
     }
-
-    dispatch(setLog(newLog));
+    store.log = newLog;
   };
 
   React.useEffect(() => {
@@ -92,13 +91,13 @@ const TryPage = (props: any) => {
     const newResult = { ...userNumbers, numeros: newNumbers };
     dispatch(setResult(newResult));
     if (newNumbers.length === 0) {
-      dispatch(setLog(""));
+      store.log = "";
     }
     fetchStats();
   };
 
   const handleClear = async (event: any): Promise<void> => {
-    dispatch(setLog(""));
+    store.log = "";
     dispatch(setResult({ ...userNumbers, numeros: [] }));
   };
 
@@ -128,5 +127,4 @@ const TryPage = (props: any) => {
 export default connect((state) => ({
   last: (state as any).last,
   userNumbers: (state as any).userNumbers,
-  log: (state as any).log,
 }))(TryPage);
