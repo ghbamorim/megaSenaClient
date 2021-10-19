@@ -1,11 +1,11 @@
+import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { toast } from "react-toastify";
+import { TodoStore } from "../../store/mobx";
 import Card from "../card/card";
 import CardController from "../card/cardController";
-import { Grid } from "@material-ui/core";
-import { StoreContext } from "../../store/mobx";
-import { useObserver } from "mobx-react-lite";
+import { observer } from "mobx-react";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -30,30 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardObserver = (handleClick: any) => {
-  const store = React.useContext(StoreContext);
-  return useObserver(() => (
-    <Card result={store.userNumbers} onClick={handleClick}></Card>
-  ));
-};
-
-const LogObserver = (classes: any) => {
-  const store = React.useContext(StoreContext);
-  return useObserver(() => (
-    <textarea
-          className={classes.textArea}
-          value={store.log}
-          readOnly={true}
-        />
-  ));
-};
-
-
-const TryPage = () => {
-  const store = React.useContext(StoreContext);
+const TryPage = observer(() => {
+  const store = TodoStore;
   const classes = useStyles();
   const userNumbers = store.userNumbers;
-  const log = store.log;
 
   const fetchResults = async () => {
     if (userNumbers.sorteio === 1) {
@@ -121,7 +101,7 @@ const TryPage = () => {
   return (
     <React.Fragment>
       <div className={classes.select}>
-        {CardObserver(handleClick)}
+        <Card result={store.userNumbers} onClick={handleClick}></Card>
         <Grid container spacing={1}>
           <Grid item xs={1}>
             <button onClick={handleClear} className={classes.button}>
@@ -131,10 +111,14 @@ const TryPage = () => {
         </Grid>
       </div>
       <div className={classes.textDiv}>
-      {LogObserver(classes)}
+        <textarea
+          className={classes.textArea}
+          value={store.log}
+          readOnly={true}
+        />
       </div>
     </React.Fragment>
   );
-};
+});
 
 export default TryPage;

@@ -1,11 +1,11 @@
-import Card from "../card/card";
-import CardController from "../card/cardController";
 import React from "react";
 import Result from "../../models/results";
-import { StoreContext } from "../../store/mobx";
+import { TodoStore } from "../../store/mobx";
+import Card from "../card/card";
+import CardController from "../card/cardController";
 
 const Last = () => {
-  const store = React.useContext(StoreContext);
+  const store = TodoStore;
   const [result, setResult] = React.useState<Result>({
     sorteio: 0,
     numeros: [],

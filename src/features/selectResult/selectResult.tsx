@@ -5,9 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import Card from "../card/card";
 import CardController from "../card/cardController";
-import { StoreContext } from "../../store/mobx";
-import { initialResult } from "../../store/mobx";
-import { useObserver } from "mobx-react-lite";
+import { initialResult, TodoStore } from "../../store/mobx";
+import { observer } from "mobx-react";
 
 const useStyles = makeStyles((theme) => ({
   select: {
@@ -20,24 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardObserver = () => {
-  const store = React.useContext(StoreContext);
-  return useObserver(() => (
-    <Card result={store.selectedResult}></Card>
-  ));
-};
-
-
-const SelectResult = (props: any) => {
+const SelectResult = observer(() => {
   const classes = useStyles();
-  const store = React.useContext(StoreContext);
+  const store = TodoStore;
   const last = store.last;
-  
 
   const handleChange = async (event: any) => {
     const cardController = new CardController(`/results/${event.target.value}`);
     const results = await cardController.getNumbers();
-    store.selectedResult = results;
+    store.selectedResult = results as any;
   };
 
   const fetchResults = async () => {
@@ -45,7 +35,7 @@ const SelectResult = (props: any) => {
       const cardController = new CardController("/last");
       const results = await cardController.getNumbers();
       store.last = results.sorteio;
-      store.selectedResult = results;
+      store.selectedResult = results as any;
     }
   };
 
@@ -86,9 +76,9 @@ const SelectResult = (props: any) => {
           ))}
         </Select>
       </div>
-      <CardObserver/>
+      <Card result={store.selectedResult}></Card>
     </React.Fragment>
   );
-};
+});
 
 export default SelectResult;
